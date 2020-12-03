@@ -6,11 +6,12 @@ const mongoose = require('mongoose'),
       config = require('../configs/app')
  
 const schema = new mongoose.Schema({
-  username: { type: String, index: true, required: true, unique: true, uniqueCaseInsensitive: false },
+  username: { type: String, index: true, required: true, unique: true,},
   password: { type: String, index: true },
+  first_name : { type: String},
+  last_name : { type: String},
   email: { type: String },
-  age: { type: Number },
-  birthday: Date
+  token: { type: String },
 }, { timestamps: true });
 
 // Apply the uniqueValidator plugin to userSchema.
@@ -36,9 +37,8 @@ schema.methods.toJSON = function() {
     id: this._id,
     username: this.username,
     email: this.email,
-    age: this.age,
-    photoURL: this.image || 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-    birthday: this.birthday,
+    first_name : this.first_name,
+    last_name : this.last_name,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt
   }

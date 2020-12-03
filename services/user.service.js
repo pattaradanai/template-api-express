@@ -6,10 +6,14 @@ const User = require('../models/User'),
 const methods = {
     async create(req){
       try {
+        
         console.log(req);
-        const obj = new User(data)
-        return { obj : req}
-      } catch (error) {
+        const obj = new User(req)
+        await obj.save()
+
+        return obj
+      } 
+      catch (error) {
         return error
       }
   }

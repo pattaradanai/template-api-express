@@ -1,14 +1,15 @@
-version: '3.7'
+version: '3.3'
 services:
-  mongodb_container:
+  mongo:
+    container_name: mongo
     image: mongo:4.2.2
     environment:
+      MONGO_INITDB_DATABASE: mobilebe
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: secret
-      MONGO_INITDB_DATABASE: mydb
     ports:
       - 27017:27017
     volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - data:/data/db
-volumes:
-  data:
+    restart: always
