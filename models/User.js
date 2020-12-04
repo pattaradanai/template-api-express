@@ -10,31 +10,29 @@ const schema = new mongoose.Schema({
   password: { type: String, index: true },
   first_name : { type: String},
   last_name : { type: String},
-  email: { type: String },
+  email: { type: String , unique: true},
   token: { type: String },
 }, { timestamps: true });
 
 // Apply the uniqueValidator plugin to userSchema.
 schema.plugin(uniqueValidator);
 
-// // Generate JWT
-// schema.methods.generateJWT = function(obj) {
-//   let today = new Date(),
-//       exp = new Date(today)
-//   // exp.setDate(today.getDate() + config.token_exp_days || 1);
-//   exp.setMinutes(today.getMinutes() + 30);
+// Generate JWT
+schema.methods.generateJWT = function(obj) {
+  let today = new Date(),
+      exp = new Date(today)
+  // exp.setDate(today.getDate() + config.token_exp_days || 1);
+  exp.setMinutes(today.getMinutes() + 30);
   
-//   return jwt.sign({
-//     id: this._id,
-//     username: this.username,
-//     exp: parseInt(exp.getTime() / 1000),
-//   }, config.secret)
-// }
+  return jwt.sign({
+    username: this.username,
+    exp: parseInt(exp.getTime() / 1000),
+  }, config.secret)
+}
 
 // Custom JSON Response
 schema.methods.toJSON = function() {
   return {
-    id: this._id,
     username: this.username,
     email: this.email,
     first_name : this.first_name,

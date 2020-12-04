@@ -1,6 +1,7 @@
+const { findOne } = require('../models/User');
 const User = require('../models/User'),
       config = require('../configs/app'),
-      jwt = require('jsonwebtoken')
+      jwt = require('jsonwebtoken');
 
 
 const methods = {
@@ -16,7 +17,16 @@ const methods = {
       catch (error) {
         return error
       }
-  }
+  },
+  async fineByUsername(username){
+    try {
+      let response = await User.findOne({username : username})
+      return response
+    } 
+    catch (error) {
+      return error
+    }
+}
   // scopeSearch(req) {
   //   $or = []
   //   if(req.query.username) $or.push({ username: { $regex: req.query.username } })
@@ -57,7 +67,7 @@ const methods = {
   //   });
   // },
 
-  // findById(id) {
+  // findById(id) { 
   //   return new Promise(async (resolve, reject) => {
   //     try {
   //       let obj = await User.findById(id)
