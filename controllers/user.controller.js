@@ -32,9 +32,7 @@ const methods = {
   },
   async listUser(req,res){
     try {
-      let { filter } = req.query;
-      console.log("filter : " , filter);
-      let response = await Service.findAll(filter);
+      let response = await Service.findAll(req.query);
       if (!response) {
         return res.error('user not found' , error.status)
       } else {
