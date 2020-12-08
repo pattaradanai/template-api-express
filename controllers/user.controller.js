@@ -29,6 +29,20 @@ const methods = {
 
       return res.error(error.message, error.status)
     }
+  },
+  async listUser(req,res){
+    try {
+      let { filter } = req.query;
+      console.log("filter : " , filter);
+      let response = await Service.findAll(filter);
+      if (!response) {
+        return res.error('user not found' , error.status)
+      } else {
+        return res.success(response, 200);
+      }
+    } catch (error) {
+      return res.error(error.message,error.status)
+    }
   }
  
 

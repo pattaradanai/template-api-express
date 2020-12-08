@@ -7,26 +7,33 @@ const User = require('../models/User'),
 const methods = {
     async create(req){
       try {
-        
         console.log(req);
-        const obj = new User(req)
-        await obj.save()
-
-        return obj
+        const response = new User(req)
+        await response.save()
+        return response;
       } 
       catch (error) {
-        return error
+        return error;
       }
   },
   async fineByUsername(username){
     try {
       let response = await User.findOne({username : username})
-      return response
+      return response;
     } 
     catch (error) {
-      return error
+      return error;
     }
-}
+  },
+  async findAll(filter){
+    try {
+      let query = filter ? filter : null;
+      let response = await User.find(query);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
   // scopeSearch(req) {
   //   $or = []
   //   if(req.query.username) $or.push({ username: { $regex: req.query.username } })
